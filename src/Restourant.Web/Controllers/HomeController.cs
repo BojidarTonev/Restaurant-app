@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Restaurant.Web.Models;
+using Restourant.Web.Models;
 
-namespace Restaurant.Web.Controllers
+namespace Restourant.Web.Controllers
 {
     public class HomeController : Controller
     {
