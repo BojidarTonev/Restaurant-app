@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restourant.Web", "Restourant.Web\Restourant.Web.csproj", "{00F5BED5-7E04-474C-BED3-F526D07C6E64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restourant.Web", "Restourant.Web\Restourant.Web.csproj", "{00F5BED5-7E04-474C-BED3-F526D07C6E64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Data", "Restaurant.Data\Restaurant.Data.csproj", "{2C5DE93F-0521-4057-9BA6-56A0A86A33B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.Data", "Restaurant.Data\Restaurant.Data.csproj", "{2C5DE93F-0521-4057-9BA6-56A0A86A33B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Sandbox", "Restaurant.Sandbox\Restaurant.Sandbox.csproj", "{366AD5AE-EAC7-4012-8C15-387BCE16BFA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2C5DE93F-0521-4057-9BA6-56A0A86A33B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C5DE93F-0521-4057-9BA6-56A0A86A33B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C5DE93F-0521-4057-9BA6-56A0A86A33B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{366AD5AE-EAC7-4012-8C15-387BCE16BFA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{366AD5AE-EAC7-4012-8C15-387BCE16BFA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{366AD5AE-EAC7-4012-8C15-387BCE16BFA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{366AD5AE-EAC7-4012-8C15-387BCE16BFA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

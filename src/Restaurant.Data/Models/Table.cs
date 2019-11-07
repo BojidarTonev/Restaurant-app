@@ -10,7 +10,7 @@ namespace Restaurant.Data.Models
         {
             this.Orders = new List<Order>();
         }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public RestaurantUser User { get; set; }
 
         public decimal Total { get; set; }

@@ -17,22 +17,22 @@
                 <li>
                     <a asp-area="Products" asp-controller="Products" asp-action="All">Menu</a>
                 </li>
-                <li>
-                    <a asp-area="Tables" asp-controller="Tables" asp-action="All">Active Tables</a>
-                </li>
                 @if (this.User.Identity.IsAuthenticated)
-                 {
+                {
                     @if (this.User.IsInRole("Admin"))
-                     {
+                    {
                         <li>
                             Manage Employees
                         </li>
                         <li>
                             Ban user
                         </li>
-                     }
+                    }
                     else if (this.User.IsInRole("Staff"))
                     {
+                        <li>
+                            <a asp-area="Tables" asp-controller="Tables" asp-action="All">Active Tables</a>
+                        </li>
                         <li>
                             Register Table
                         </li>
@@ -40,7 +40,7 @@
                             Cuurently Active Tables for Employee
                         </li>
                     }
-                 }
+                }
             </ul>
             <ul class="right-items">
                 @if (this.User.Identity.IsAuthenticated)

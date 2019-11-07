@@ -1,0 +1,20 @@
+﻿.homepage-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.homepage-introduce {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 70%;
+    padding: 4em;
+    margin-top: 2em;
+    background: #429bf5;
+    color: black;
+    border-radius: 3em;
+}

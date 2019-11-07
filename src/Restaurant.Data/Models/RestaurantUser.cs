@@ -16,8 +16,6 @@ namespace Restaurant.Data.Models
 
         public string Password { get; set; }
 
-        public Roles Role { get; set; }
-
         public ICollection<Table> TablesServed { get; set; }
     }
 }
