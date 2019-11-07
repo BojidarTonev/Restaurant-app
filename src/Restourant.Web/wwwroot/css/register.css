@@ -1,0 +1,43 @@
+﻿.register-wrapper {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-top: 3em;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--red-color, red);
+    padding: 3em;
+    border-radius: 2.5em;
+}
+
+.register-form button {
+    padding: 1em;
+    margin-top: 2em;
+    color: white;
+    background: black;
+    border: none;
+    border-radius: 2em;
+    width: 40%;
+}
+
+.label-input-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.label-input-group input {
+       border-radius: 0.5em;
+       background: gray;
+       border: none;
+       padding: 0.5em;
+       width: 150%;
+}

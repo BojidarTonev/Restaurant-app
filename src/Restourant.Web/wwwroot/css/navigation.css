@@ -1,0 +1,36 @@
+﻿.navigation {
+    display: flex;
+    background: var(--red-color, red);
+    height: 5em;
+}
+    .navigation a {
+        text-decoration: none;
+        background: gray;
+        padding: 0.6em;
+        border-radius: 0.5em;
+    }
+
+    .navigation li {
+        list-style-type: none;
+    }
+
+        .navigation li a {
+            margin: 0 1.5em;
+            color: black;
+        }
+
+.right-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 10em;
+    top: 1.5em;
+}
+
+.left-items {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 1.5em;
+}

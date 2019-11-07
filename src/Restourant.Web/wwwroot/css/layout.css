@@ -1,0 +1,35 @@
+﻿body {
+    background: url('../../images/background-image.jpg');
+    color: #a39d87;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.site {
+    max-width: var(--layout-main-width, 70em);
+    margin: 0 auto;
+}
+
+.site-main {
+    min-height: 20em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.site-main-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+}
+
+    .site-main-title h1 {
+        padding: 0 1em;
+        border-bottom: 3px solid #a39d87;
+        background: black;
+    }
+
+@media (min-width: 1024px) {
+}

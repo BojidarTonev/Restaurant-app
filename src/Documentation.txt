@@ -1,0 +1,9 @@
+This is a web restourant buissiness based software with the idea to make the work process in restaurants much easier and smoother.
+The web application is written on ASP.NET Core 2.2 with Razor Pages, following the MVC pattern. For data storage MSSQL local database is being used which is being accessed
+via Entity Framework Core. In the database the main idea is to have Entity hierarchy having the User class entity containg all the information in the platform entries 
+beneath. User entities have table entities data that have been served by them, and the tables themselves contain information about the orders, total sum and products that 
+were ordered in the time period that they were active. To achieve that hierarchy the database has two One-To-Many relations between the entities. These relations are 
+between  Tables and Orders, one Table has many Orders and one Order can have just one Table. Relativly the same is with Orders having multiple Products at once and the 
+Product that can have just one order to be in.
+For the back-end of the login, register and logout functionality and folder structure has been used Scaffolded Identity from ASP.NET Core.
+The architecture of the Models, Views and Controllers has been used in Areas, each containing only the files that it's dependant on.
