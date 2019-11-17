@@ -1,8 +1,4 @@
 ﻿using Restaurant.Data.Models.Contracts;
-using Restaurant.Data.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Restaurant.Data.Models
 {
@@ -16,6 +12,6 @@ namespace Restaurant.Data.Models
 
         public string ImageUrl { get; set; }
 
-        public Categories Category { get; set; }
+        public Category Category { get; set; }
     }
 }

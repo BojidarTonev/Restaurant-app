@@ -1,6 +1,6 @@
 ﻿.navigation {
     display: flex;
-    background: var(--red-color, red);
+    background: var(--main-brown-color, red);
     height: 5em;
 }
     .navigation a {

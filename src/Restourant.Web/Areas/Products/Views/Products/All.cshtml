@@ -1,0 +1,65 @@
+﻿@model ProductsAllViewModelWrapper
+
+@{
+    ViewData["Title"] = "Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var productCategories = this.ViewData["ProductCategories"] as IEnumerable<SelectListItem>;
+}
+
+
+
+
+<div class="menu-wrapper">
+    <h1>@ViewData["Title"]</h1>
+    <div class="introduction">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+        sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </div>
+    <form asp-area="Products" asp-controller="Products" asp-action="All" method="post" class="menu-search-wrapper">
+        <select asp-items="productCategories" asp-for="@Model.DisplayCategory">
+        </select>
+        <button type="submit">Search!</button>
+    </form>
+
+</div>
+
+@{
+    int counter = 1;
+
+    @foreach (var product in Model.Products)
+    {
+        <div class="cards-wrapper">
+            <div class="block-wrapper">
+                <div class="product-card">
+                    <h2>@product.Name</h2>
+                    <div class="lower-content">
+                        <div class="product-upper-part">
+                            <img src="@product.ImageUrl" />
+                        </div>
+                        <div class="product-lower-part">
+                            <p class="product-description">@product.Description</p>
+                            <p>@product.Price $</p>
+                        </div>
+                    </div>
+                    @if (User.IsInRole("Staff"))
+                    {
+
+                        <a href="">Add to order</a>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if (counter % 3 == 0)
+        {
+            <br />
+        }
+
+        counter++;
+    }
+
+
+}

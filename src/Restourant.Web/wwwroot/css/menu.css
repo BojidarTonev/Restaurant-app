@@ -1,0 +1,86 @@
+﻿.menu-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding: 2em;
+}
+
+.introduction {
+    width: 75ch;
+}
+
+.cards-wrapper {
+    display: inline-block
+}
+
+.block-wrapper {
+    display: inline-block;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 23em;
+    height: 20em;
+    background: var(--main-gray-color, gray);
+    padding: 3em;
+    margin: 3em;
+    border-radius: 3em;
+}
+
+.product-card img {
+    max-width: 15em;
+}
+
+.lower-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-description {
+    margin: 0 1em;
+    width: 15ch;
+}
+
+.menu-search-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 80%;
+    height: 4em;
+    border-radius: 3em;
+    margin-top: 2em;
+    background-color: var(--main-brown-color, gray);
+}
+
+    .menu-search-wrapper input {
+        border-radius: 0.5em;
+        background: gray;
+        border: none;
+        padding: 0.5em;
+    }
+
+    .menu-search-wrapper select {
+        border-radius: 0.5em;
+        background: gray;
+        border: none;
+        padding: 0.5em;
+    }
+
+    .menu-search-wrapper button {
+        padding: 1em;
+        margin-top: 2em;
+        color: white;
+        background: black;
+        border: none;
+        border-radius: 2em;
+        margin-bottom: 2em;
+    }

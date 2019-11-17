@@ -4,7 +4,7 @@
     width: 100%;
     white-space: nowrap;
     height: 60px;
-    background: var(--red-color, red);
+    background: var(--main-brown-color, red);
     display: flex;
     justify-content: center;
     line-height: 60px;

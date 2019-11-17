@@ -5,7 +5,10 @@
     --font-size-body-big: 18px;
     --font-size-body-huge: 20px;
     --layout-main-width: 70em;
-    /*Layout main colours*/
 
-    --red-color: #4a2926
+    /*Layout main colours*/
+    --main-brown-color: #4a2926;
+    --main-gray-color: #666666;
+
+
 }

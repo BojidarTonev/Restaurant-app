@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Restaurant.Data;
 using Restaurant.Data.Contracts;
 
-namespace TattooShop.Data
+namespace Restaurant.Data
 {
     public class DbRepository<TEntity> : IRepository<TEntity>, IDisposable
         where TEntity : class

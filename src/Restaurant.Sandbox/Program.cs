@@ -8,15 +8,15 @@ using Restaurant.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TattooShop.Data;
 
 namespace Restaurant.Sandbox
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
             Console.WriteLine($"{typeof(Program).Namespace} ({string.Join(" ", args)}) starts working...");
@@ -27,24 +27,25 @@ namespace Restaurant.Sandbox
             using (var serviceScope = serviceProvider.CreateScope())
             {
                 serviceProvider = serviceScope.ServiceProvider;
-                SandboxCode(serviceProvider);
+                await SandboxCodeAsync(serviceProvider);
             }
         }
 
-        private static void SandboxCode(IServiceProvider serviceProvider)
+        private static async Task SandboxCodeAsync(IServiceProvider serviceProvider)
         {
             //Add code here..
-            SeedDatabase(serviceProvider);
+            await SeedDatabaseAsync(serviceProvider);
         }
 
-        private static void SeedDatabase(IServiceProvider serviceProvider)
+        private static async Task SeedDatabaseAsync(IServiceProvider serviceProvider)
         {
             SeedDefaultAdminRolesAndTwoUsers(serviceProvider);
-            SeedTables(serviceProvider);
+            await SeedTables(serviceProvider);
+            SeedCategories(serviceProvider);
             SeedProducts(serviceProvider);
         }
 
-        private async static void SeedTables(IServiceProvider serviceProvider)
+        private static async Task SeedTables(IServiceProvider serviceProvider)
         {
             var db = serviceProvider.GetService<RestaurantAppContext>();
             var petkoEmployee = await db.Users.FirstAsync(user => user.FirstName == "Petko");
@@ -80,7 +81,7 @@ namespace Restaurant.Sandbox
 
             if (!db.Products.AnyAsync().Result)
             {
-                var products = GetSampleProductsData();
+                var products = GetProducts(db);
 
                 db.Products.AddRange(products);
                 db.SaveChanges();
@@ -89,25 +90,45 @@ namespace Restaurant.Sandbox
             }
         }
 
-        private static List<Product> GetSampleProductsData()
+        private static void SeedCategories(IServiceProvider serviceProvider)
+        {
+            var db = serviceProvider.GetService<RestaurantAppContext>();
+
+            if (!db.Categories.AnyAsync().Result)
+            {
+                var categories = GetCategories();
+
+                db.Categories.AddRange(categories);
+                db.SaveChanges();
+
+                Console.WriteLine("All product categories have been seeded succesdully to the database!");
+            }
+        }
+
+        private static List<Product> GetProducts(RestaurantAppContext db)
         {
             var products = new List<Product>();
 
-            //Bar products
-            var product0 = new Product() { Name = "Coca-Cola", Category = Data.Models.Enums.Categories.Bar, Description = "gazirarno i vredno", Price = 1.20m, ImageUrl = "http://www.cantina-ola.com/media/7/21.jpg" };
-            var product1 = new Product() { Name = "Pepsi", Category = Data.Models.Enums.Categories.Bar, Description = "pak gazirano i vredno", Price = 1.30m, ImageUrl = "http://tuidagroup.com/2994-large_default/PEPSI-05L12.jpg" };
-            var product2 = new Product() { Name = "Water", Category = Data.Models.Enums.Categories.Bar, Description = "polezno i vkusno", Price = 1.00m, ImageUrl = "http://www.homebag.bg/media/7/8017.jpg" };
+            var bar = db.Categories.First(c => c.Name == Data.Models.Enums.Categories.Bar);
+            var kitchen = db.Categories.First(c => c.Name == Data.Models.Enums.Categories.Kitchen);
+            var dessert = db.Categories.First(c => c.Name == Data.Models.Enums.Categories.Dessert);
+            var other = db.Categories.First(c => c.Name == Data.Models.Enums.Categories.Other);
 
-            //Kithchen products
-            var product3 = new Product() { Name = "Musaka", Category = Data.Models.Enums.Categories.Kitchen, Description = "Best meal in the world ever", Price = 5.60m, ImageUrl = "https://i.ytimg.com/vi/S8j6Tc-1APk/maxresdefault.jpg" };
-            var product4 = new Product() { Name = "Gyuveche", Category = Data.Models.Enums.Categories.Kitchen, Description = "Bulgarian traditional meal, kind of", Price = 5.20m, ImageUrl = "https://gotvach.bg/files/lib/600x350/ovcharsko-guveche-sirene.JPG" };
-            var product5 = new Product() { Name = "Banitsa", Category = Data.Models.Enums.Categories.Kitchen, Description = "Another Bulgarian traditional meal. Delicious!", Price = 5.50m, ImageUrl = "https://gotvach.bg/files/lib/600x350/spoluchliva-banica-sirene.JPG" };
-            var product6 = new Product() { Name = "Chicken with rice", Category = Data.Models.Enums.Categories.Kitchen, Description = "Cicken with rice only for post-traiing meals.", Price = 6.00m, ImageUrl = "https://recepti.ezine.bg/files/lib/500x350/pile-oriz-zvezdev.jpg" };
+            //Bar products
+            var product0 = new Product() { Name = "Coca-Cola", Category = bar, Description = "gazirarno i vredno", Price = 1.20m, ImageUrl = "http://www.cantina-ola.com/media/7/21.jpg" };
+            var product1 = new Product() { Name = "Pepsi", Category = bar, Description = "pak gazirano i vredno", Price = 1.30m, ImageUrl = "http://tuidagroup.com/2994-large_default/PEPSI-05L12.jpg" };
+            var product2 = new Product() { Name = "Water", Category = bar, Description = "polezno i vkusno", Price = 1.00m, ImageUrl = "http://www.homebag.bg/media/7/8017.jpg" };
+
+            //Kitchen products
+            var product3 = new Product() { Name = "Musaka", Category = kitchen, Description = "Best meal in the world ever", Price = 5.60m, ImageUrl = "https://i.ytimg.com/vi/S8j6Tc-1APk/maxresdefault.jpg" };
+            var product4 = new Product() { Name = "Gyuveche", Category = kitchen, Description = "Bulgarian traditional meal, kind of", Price = 5.20m, ImageUrl = "https://gotvach.bg/files/lib/600x350/ovcharsko-guveche-sirene.JPG" };
+            var product5 = new Product() { Name = "Banitsa", Category = kitchen, Description = "Another Bulgarian traditional meal. Delicious!", Price = 5.50m, ImageUrl = "https://gotvach.bg/files/lib/600x350/spoluchliva-banica-sirene.JPG" };
+            var product6 = new Product() { Name = "Chicken with rice", Category = kitchen, Description = "Cicken with rice only for post-traiing meals.", Price = 6.00m, ImageUrl = "https://recepti.ezine.bg/files/lib/500x350/pile-oriz-zvezdev.jpg" };
 
             //Dessert products
-            var product7 = new Product() { Name = "Ice-cream", Category = Data.Models.Enums.Categories.Dessert, Description = "ice-cream for sore throat", Price = 5.10m, ImageUrl = "https://recepti.gotvach.bg/files/lib/500x350/melba3.jpg" };
-            var product8 = new Product() { Name = "Fruit salad", Category = Data.Models.Enums.Categories.Dessert, Description = "best in vitamins and stuff", Price = 8.40m, ImageUrl = "http://assets.kulinaria.bg/attachments/pictures-images/0000/5689/MAIN-2015-07-31-11-14-39-0300-0-1-2.jpg?1438330483" };
-            var product9 = new Product() { Name = "Pancakes", Category = Data.Models.Enums.Categories.Dessert, Description = "tastiest pankaces ever lol", Price = 2.50m, ImageUrl = "https://ezine.bg/files/lib/600x350/palachinki18.jpg" };
+            var product7 = new Product() { Name = "Ice-cream", Category = dessert, Description = "ice-cream for sore throat", Price = 5.10m, ImageUrl = "https://recepti.gotvach.bg/files/lib/500x350/melba3.jpg" };
+            var product8 = new Product() { Name = "Fruit salad", Category = dessert, Description = "best in vitamins and stuff", Price = 8.40m, ImageUrl = "http://assets.kulinaria.bg/attachments/pictures-images/0000/5689/MAIN-2015-07-31-11-14-39-0300-0-1-2.jpg?1438330483" };
+            var product9 = new Product() { Name = "Pancakes", Category = dessert, Description = "tastiest pankaces ever lol", Price = 2.50m, ImageUrl = "https://ezine.bg/files/lib/600x350/palachinki18.jpg" };
 
             products.Add(product0);
             products.Add(product1);
@@ -217,6 +238,35 @@ namespace Restaurant.Sandbox
                 .AddEntityFrameworkStores<RestaurantAppContext>();
 
             services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
+        }
+
+        private static List<Category> GetCategories()
+        {
+            var categories = new List<Category>();
+
+            var bar = new Category()
+            {
+                Name = Data.Models.Enums.Categories.Bar
+            };
+            var kitchen = new Category()
+            {
+                Name = Data.Models.Enums.Categories.Kitchen
+            };
+            var dessert = new Category()
+            {
+                Name = Data.Models.Enums.Categories.Dessert
+            };
+            var other = new Category()
+            {
+                Name = Data.Models.Enums.Categories.Other
+            };
+
+            categories.Add(bar);
+            categories.Add(kitchen);
+            categories.Add(dessert);
+            categories.Add(other);
+
+            return categories;
         }
     }
 }

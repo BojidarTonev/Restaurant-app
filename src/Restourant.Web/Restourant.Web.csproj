@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Restaurant.Data\Restaurant.Data.csproj" />
+    <ProjectReference Include="..\Restaurant.Services\Restaurant.Services.csproj" />
   </ItemGroup>
 
 
@@ -29,6 +30,11 @@
     <Content Update="Areas\Identity\Pages\Account\Login.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Areas\Products\Data\" />
   </ItemGroup>
 
 </Project>

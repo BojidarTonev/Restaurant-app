@@ -10,7 +10,7 @@ using Restaurant.Data;
 namespace Restaurant.Data.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    [Migration("20191105005755_InitialCreate")]
+    [Migration("20191117183412_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,6 +131,18 @@ namespace Restaurant.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Restaurant.Data.Models.Category", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("Restaurant.Data.Models.Order", b =>
                 {
                     b.Property<string>("Id")
@@ -158,7 +170,7 @@ namespace Restaurant.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Category");
+                    b.Property<string>("CategoryId");
 
                     b.Property<string>("Description");
 
@@ -171,6 +183,8 @@ namespace Restaurant.Data.Migrations
                     b.Property<decimal>("Price");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("OrderId");
 
@@ -214,8 +228,6 @@ namespace Restaurant.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<int>("Role");
-
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
@@ -249,13 +261,11 @@ namespace Restaurant.Data.Migrations
 
                     b.Property<decimal>("Total");
 
-                    b.Property<int>("UserId");
-
-                    b.Property<string>("UserId1");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tables");
                 });
@@ -318,6 +328,10 @@ namespace Restaurant.Data.Migrations
 
             modelBuilder.Entity("Restaurant.Data.Models.Product", b =>
                 {
+                    b.HasOne("Restaurant.Data.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
                     b.HasOne("Restaurant.Data.Models.Order")
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
@@ -327,7 +341,7 @@ namespace Restaurant.Data.Migrations
                 {
                     b.HasOne("Restaurant.Data.Models.RestaurantUser", "User")
                         .WithMany("TablesServed")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

@@ -43,12 +43,23 @@ namespace Restaurant.Data.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    Role = table.Column<int>(nullable: false)
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -162,8 +173,7 @@ namespace Restaurant.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     Total = table.Column<decimal>(nullable: false),
                     Status = table.Column<string>(nullable: true),
                     ActiveFrom = table.Column<DateTime>(nullable: false),
@@ -173,8 +183,8 @@ namespace Restaurant.Data.Migrations
                 {
                     table.PrimaryKey("PK_Tables", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tables_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Tables_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -216,12 +226,18 @@ namespace Restaurant.Data.Migrations
                     Description = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
-                    Category = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<string>(nullable: true),
                     OrderId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Products_Orders_OrderId",
                         column: x => x.OrderId,
@@ -280,14 +296,19 @@ namespace Restaurant.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_OrderId",
                 table: "Products",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tables_UserId1",
+                name: "IX_Tables_UserId",
                 table: "Tables",
-                column: "UserId1");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -312,6 +333,9 @@ namespace Restaurant.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Orders");
