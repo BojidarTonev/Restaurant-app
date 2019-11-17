@@ -21,20 +21,6 @@
     display: inline-block;
 }
 
-.product-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 23em;
-    height: 20em;
-    background: var(--main-gray-color, gray);
-    padding: 3em;
-    margin: 3em;
-    border-radius: 3em;
-}
-
 .product-card img {
     max-width: 15em;
 }

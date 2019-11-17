@@ -6,9 +6,12 @@ namespace Restaurant.Data.Models
 {
     public class Table : BaseModel<string>
     {
+        private readonly string OFF_STATUS = "Off";
+
         public Table()
         {
             this.Orders = new List<Order>();
+            this.Status = this.OFF_STATUS;
         }
         public string Name { get; set; }
 

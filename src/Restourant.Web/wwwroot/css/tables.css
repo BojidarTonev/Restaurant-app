@@ -1,0 +1,61 @@
+﻿.tables-intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.table-intro-text {
+    width: 75ch;
+}
+
+.my-tables {
+    display: flex;
+}
+
+.table-card-wrapper {
+    display: inline-block;
+}
+
+.tables-wrapper {
+    display: inline-block !important;
+}
+
+.table-button {
+    background: yellow;
+    padding: 0.7em;
+    margin-top: 1em;
+}
+
+.table-lower-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.table-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 23em;
+    height: 20em;
+    background: var(--main-gray-color, gray);
+    margin: 3em;
+    border-radius: 3em;
+    padding-bottom: 1em;
+}
+
+    .table-card img {
+        width: 10em;
+        height: 10em;
+    }
+
+.table-lower-section a {
+    margin: 0.5em;
+    border-radius: 0.3em;
+}

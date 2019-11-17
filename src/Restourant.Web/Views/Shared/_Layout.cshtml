@@ -22,19 +22,22 @@
                     @if (this.User.IsInRole("Admin"))
                     {
                         <li>
-                            Manage Employees
+                            <a asp-area="Tables" asp-controller="Tables" asp-action="All" class="staff-button">All Tables</a>
                         </li>
                         <li>
-                            Ban user
+                            <a asp-area="" asp-controller="" asp-action="" class="staff-button">Manage shift</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="" asp-action="" class="staff-button">All revenue</a>
                         </li>
                     }
                     else if (this.User.IsInRole("Staff"))
                     {
                         <li>
-                            <a asp-area="Tables" asp-controller="Tables" asp-action="All" class="staff-button">My Tables</a>
+                            <a asp-area="Tables" asp-controller="Tables" asp-action="All" class="staff-button">Create Order</a>
                         </li>
                         <li>
-                            <a asp-area="Tables" asp-controller="Tables" asp-action="All" class="staff-button">Create Order</a>
+                            <a asp-area="Tables" asp-controller="Tables" asp-action="AllTablesForUser" class="staff-button">My Tables</a>
                         </li>
                     }
                 }
