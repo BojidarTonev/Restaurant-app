@@ -31,13 +31,10 @@
                     else if (this.User.IsInRole("Staff"))
                     {
                         <li>
-                            <a asp-area="Tables" asp-controller="Tables" asp-action="All">Active Tables</a>
+                            <a asp-area="Tables" asp-controller="Tables" asp-action="All" class="staff-button">My Tables</a>
                         </li>
                         <li>
-                            Register Table
-                        </li>
-                        <li>
-                            Cuurently Active Tables for Employee
+                            <a asp-area="Tables" asp-controller="Tables" asp-action="All" class="staff-button">Create Order</a>
                         </li>
                     }
                 }

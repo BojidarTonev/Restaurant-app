@@ -173,6 +173,7 @@ namespace Restaurant.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     Total = table.Column<decimal>(nullable: false),
                     Status = table.Column<string>(nullable: true),

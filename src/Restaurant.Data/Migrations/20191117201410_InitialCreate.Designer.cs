@@ -10,7 +10,7 @@ using Restaurant.Data;
 namespace Restaurant.Data.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    [Migration("20191117183412_InitialCreate")]
+    [Migration("20191117201410_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -256,6 +256,8 @@ namespace Restaurant.Data.Migrations
                     b.Property<DateTime>("ActiveFrom");
 
                     b.Property<DateTime>("ActiveTo");
+
+                    b.Property<string>("Name");
 
                     b.Property<string>("Status");
 

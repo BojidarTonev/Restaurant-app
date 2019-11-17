@@ -58,6 +58,7 @@ namespace Restaurant.Sandbox
                 for (int i = 0; i < 5; i++)
                 {
                     var table = new Table();
+                    table.Name = $"Table №{i}" ;
                     if(i % 2 == 0)
                     {
                         table.UserId = petkoEmployee.Id;

@@ -34,3 +34,7 @@
     position: absolute;
     top: 1.5em;
 }
+
+.staff-button {
+    background: var(--staff-color, red) !important;
+}

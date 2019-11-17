@@ -10,6 +10,8 @@ namespace Restaurant.Data.Models
         {
             this.Orders = new List<Order>();
         }
+        public string Name { get; set; }
+
         public string UserId { get; set; }
         public RestaurantUser User { get; set; }
 

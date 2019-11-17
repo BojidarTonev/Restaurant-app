@@ -255,6 +255,8 @@ namespace Restaurant.Data.Migrations
 
                     b.Property<DateTime>("ActiveTo");
 
+                    b.Property<string>("Name");
+
                     b.Property<string>("Status");
 
                     b.Property<decimal>("Total");

@@ -30,11 +30,18 @@
     <Content Update="Areas\Identity\Pages\Account\Login.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="Areas\Tables\Views\Tables\All.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Areas\Tables\Views\_ViewImports.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 
   <ItemGroup>
     <Folder Include="Areas\Products\Data\" />
+    <Folder Include="Areas\Tables\Data\" />
   </ItemGroup>
 
 </Project>
