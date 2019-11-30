@@ -44,11 +44,12 @@
                             <p>@product.Price $</p>
                         </div>
                     </div>
-                    @if (User.IsInRole("Staff"))
-                    {
-
-                        <a href="">Add to order</a>
-                    }
+                    <div class="menu-create-order">
+                        <i class="fas fa-minus-circle" id="minus"></i>
+                            <div class="menu-order-number">0</div>
+                        <i class="fas fa-plus-circle" id="plus"></i>
+                        <input type="button" name="submit-order" value="Submit order" />
+                    </div>
                 </div>
             </div>
         </div>

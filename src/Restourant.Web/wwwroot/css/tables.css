@@ -23,7 +23,8 @@
 }
 
 .table-button {
-    background: yellow;
+    background: var(--staff-color, red);
+    color: black;
     padding: 0.7em;
     margin-top: 1em;
 }
