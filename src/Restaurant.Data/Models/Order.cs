@@ -1,16 +1,10 @@
 ﻿using Restaurant.Data.Models.Contracts;
 using System;
-using System.Collections.Generic;
 
 namespace Restaurant.Data.Models
 {
     public class Order : BaseModel<string>
     {
-        public Order()
-        {
-            this.Products = new List<Product>();
-        }
-
         public string UserId { get; set; }
         public RestaurantUser User { get; set; }
 
@@ -21,7 +15,10 @@ namespace Restaurant.Data.Models
         public string TableId { get; set; }
         public Table Table { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public decimal totalPrice { get; set; }
+
+        public string ProductId { get; set; }
+        public Product Product { get; set; }
 
     }
 }

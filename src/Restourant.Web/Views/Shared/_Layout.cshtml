@@ -35,7 +35,7 @@
                     else if (this.User.IsInRole("Staff"))
                     {
                         <li>
-                            <a asp-area="Tables" asp-controller="Tables" asp-action="All" class="staff-button">Create Order</a>
+                            <a asp-area="Orders" asp-controller="Orders" asp-action="OrdersForUser" class="staff-button">My orders</a>
                         </li>
                         <li>
                             <a asp-area="Tables" asp-controller="Tables" asp-action="AllTablesForUser" class="staff-button">My Tables</a>
@@ -69,7 +69,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted footer">
         <div class="container">
             &copy; 2019 - Restourant.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

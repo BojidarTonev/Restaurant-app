@@ -1,0 +1,25 @@
+﻿@model CreateOrderDto
+
+@{
+    ViewData["Title"] = "Create Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var availableTables = this.ViewData["AvailableTables"] as IEnumerable<SelectListItem>;
+}
+
+    <div class="create-order-wrapper">
+        <h2>@ViewData["Title"]</h2>
+        <p>You want to order @Model.productName.</p>
+        <img src="@Model.productImageUrl" alt="product-image-here" />
+        <p>Please select the quantity you want to buy.</p>
+        <form asp-area="Orders" asp-controller="Orders" asp-action="CreateOrder" method="post" enctype="multipart/form-data">
+            <label asp-for="@Model.Quantity">Quantity:</label>
+            <input asp-for="@Model.Quantity" type="number" name="quantity" value="0" />
+            <span asp-validation-for="@Model.Quantity"></span>
+
+            <p>Please select the table you are currently sitting on.</p>
+            <select asp-items="availableTables" asp-for="@Model.DisplayTable"></select>
+            <br />
+            <button type="submit" class="submit-order" asp-route-productId="@Model.productId">Submit order!</button>
+        </form>
+    </div>

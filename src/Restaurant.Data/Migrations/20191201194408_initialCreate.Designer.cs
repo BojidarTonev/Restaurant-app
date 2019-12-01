@@ -10,8 +10,8 @@ using Restaurant.Data;
 namespace Restaurant.Data.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    [Migration("20191117201410_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20191201194408_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,13 +150,19 @@ namespace Restaurant.Data.Migrations
 
                     b.Property<DateTime>("OrderedOn");
 
+                    b.Property<string>("ProductId");
+
                     b.Property<int>("Quantity");
 
                     b.Property<string>("TableId");
 
                     b.Property<string>("UserId");
 
+                    b.Property<decimal>("totalPrice");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("TableId");
 
@@ -178,15 +184,11 @@ namespace Restaurant.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("OrderId");
-
                     b.Property<decimal>("Price");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Products");
                 });
@@ -319,6 +321,10 @@ namespace Restaurant.Data.Migrations
 
             modelBuilder.Entity("Restaurant.Data.Models.Order", b =>
                 {
+                    b.HasOne("Restaurant.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
                     b.HasOne("Restaurant.Data.Models.Table", "Table")
                         .WithMany("Orders")
                         .HasForeignKey("TableId");
@@ -333,10 +339,6 @@ namespace Restaurant.Data.Migrations
                     b.HasOne("Restaurant.Data.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
-
-                    b.HasOne("Restaurant.Data.Models.Order")
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("Restaurant.Data.Models.Table", b =>

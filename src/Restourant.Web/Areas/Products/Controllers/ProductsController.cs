@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.Services.Contracts;
@@ -13,10 +11,12 @@ namespace Restourant.Web.Areas.Products.Controllers
     {
         private readonly IProductsService _productsService;
         private readonly ICategoriesService _categoriesService;
-        public ProductsController(IProductsService productsService, ICategoriesService categoriesService)
+        private readonly ITablesService _tablesService;
+        public ProductsController(IProductsService productsService, ICategoriesService categoriesService, ITablesService tablesService)
         {
             this._productsService = productsService;
             this._categoriesService = categoriesService;
+            this._tablesService = tablesService;
         }
         public IActionResult All()  
         {
@@ -33,7 +33,8 @@ namespace Restourant.Web.Areas.Products.Controllers
             var dto = new ProductsAllViewModelWrapper()
             {
                 Products = products,
-                DisplayCategory = "All"
+                DisplayCategory = "All",
+                DisplayDefaultTable = "Select your table"
             };
 
             var productsCategories = this._categoriesService.GetAllCategories()
@@ -43,7 +44,11 @@ namespace Restourant.Web.Areas.Products.Controllers
                     Text = p.Name.ToString()
                 });
 
+            var availableTables = this._tablesService.AllTables()
+                .Select(t => new SelectListItem() { Value = t.Id, Text = t.Name });
+
             this.ViewData["ProductCategories"] = productsCategories;
+            this.ViewData["AvailableTables"] = availableTables;
             return View(dto);
         }
 

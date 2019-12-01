@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var productCategories = this.ViewData["ProductCategories"] as IEnumerable<SelectListItem>;
+    var availableTables = this.ViewData["AvailableTables"] as IEnumerable<SelectListItem>;
 }
 
 
@@ -19,8 +20,7 @@
         sunt in culpa qui officia deserunt mollit anim id est laborum.
     </div>
     <form asp-area="Products" asp-controller="Products" asp-action="All" method="post" class="menu-search-wrapper">
-        <select asp-items="productCategories" asp-for="@Model.DisplayCategory">
-        </select>
+        <select asp-items="productCategories" asp-for="@Model.DisplayCategory"></select>
         <button type="submit">Search!</button>
     </form>
 
@@ -28,9 +28,18 @@
 
 @{
     int counter = 1;
+    int quantity = 0;
+    
 
     @foreach (var product in Model.Products)
+
     {
+        var data = new Dictionary<string, string> {
+            { "quantity", quantity.ToString() },
+            { "productId", product.Id},
+            { "tableId", Model.DisplayDefaultTable}
+        };
+
         <div class="cards-wrapper">
             <div class="block-wrapper">
                 <div class="product-card">
@@ -45,11 +54,9 @@
                         </div>
                     </div>
                     <div class="menu-create-order">
-                        <i class="fas fa-minus-circle" id="minus"></i>
-                            <div class="menu-order-number">0</div>
-                        <i class="fas fa-plus-circle" id="plus"></i>
-                        <input type="button" name="submit-order" value="Submit order" />
+                        <a id="before-order" asp-area="Orders" asp-controller="Orders" asp-action="CreateOrder" asp-route-id="@product.Id">Order?</a>
                     </div>
+                   
                 </div>
             </div>
         </div>

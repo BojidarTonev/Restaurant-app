@@ -12,15 +12,24 @@ namespace Restaurant.Services
         {
             this._tablesRepository = tablesRepository;
         }
+
         public IQueryable<Table> AllTables()
         {
             return this._tablesRepository.All();
         }
-
+        public IQueryable<Table> AllAvailableTables()
+        {
+            return this._tablesRepository.All().Where(t => t.Status != "Off");
+        }
         public IQueryable<Table> AllTablesForUserById(string id)
         {
             return this._tablesRepository.All().Where(t => t.UserId == id);
 
+        }
+
+        public Table GetTableById(string id)
+        {
+            return this._tablesRepository.All().First(t => t.Id == id);
         }
     }
 }

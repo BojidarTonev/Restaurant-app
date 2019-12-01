@@ -1,0 +1,32 @@
+﻿@model UserOrdersDtoWrapper
+
+@{
+    ViewData["Title"] = "OrdersForUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="orders-wrapper">
+
+        <h1>Orders For User: @Model.waiterName</h1>
+
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Table Name</th>
+                <th>Time of order</th>
+            </tr>
+            @foreach (var item in Model.userOrders)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.quantity</td>
+                    <td>@item.totalPrice</td>
+                    <td>@item.TableName</td>
+                    <td>@item.orderedOn</td>
+                </tr>
+            }
+        </table>
+    </div>
+

@@ -8,5 +8,7 @@ namespace Restaurant.Sandbox
     {
         public static readonly string AdminRole = "Admin";
         public static readonly string StaffRole = "Staff";
+        public static readonly string TableOnStatus = "FREE";
+        public static readonly string TableOffStatus = "BUSY";
     }
 }

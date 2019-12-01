@@ -10,5 +10,7 @@ namespace Restourant.Web.Areas.Products.Models
         public IEnumerable<ProductsAllViewModel> Products { get; set; }
 
         public string DisplayCategory { get; set; }
+
+        public string DisplayDefaultTable { get; set; }
     }
 }

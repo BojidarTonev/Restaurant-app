@@ -6,7 +6,7 @@
 }
 <div class="tables-intro">
     <h1>@ViewData["Title"]</h1>
-    <h3>Welcome, @this.User.Identity.Name</h3>
+    <h3>Welcome, @this.User.Identity.Name</h3>S
     <div class="table-intro-text">
         Below are the tables that you are responsible to provide service for.
     </div>
@@ -30,10 +30,10 @@
                     }
 
                 <div class="table-lower-section">
-                    <a class="table-button">Details</a>
+                    <a asp-area="Tables" asp-controller="Tables" asp-action="Details" asp-route-tableId="@table.Id" class="table-button">Details</a>
                     @if (table.Status != "Off")
                     {
-                        <a class="staff-button">Add Order</a>
+                        <a asp-area="Orders" asp-controller="Orders" asp-action="CreateOrder" asp-route-id="@table.Id" class="table-button">Add Order</a>
                     }
                 </div>
                 </div>

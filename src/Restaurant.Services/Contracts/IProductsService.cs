@@ -11,5 +11,9 @@ namespace Restaurant.Services.Contracts
         Product ProductDetails<TViewModel>(string productId);
 
         IQueryable<Product> GetAllProductsByCategory(string category);
+
+        Product GetProductById(string id);
+
+        decimal GetPriceByName(string productName);
     }
 }

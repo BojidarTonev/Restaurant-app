@@ -29,13 +29,13 @@
                         <img src="~/images/table-on.png" />
                     }
 
-                    <div class="table-lower-section">
-                        <a class="table-button">Details</a>
-                        @if (table.Status != "Off")
-                        {
-                            <a class="table-button">Add Order</a>
-                        }
-                    </div>
+                <div class="table-lower-section">
+                    <a asp-area="Tables" asp-controller="Tables" asp-action="Details" asp-route-tableId="@table.Id" class="table-button">Details</a>
+                    @if (table.Status != "Off")
+                    {
+                        <a asp-area="Orders" asp-controller="Orders" asp-action="CreateOrder" asp-route-id="@table.Id" class="table-button">Add Order</a>
+                    }
+                </div>
                 </div>
             </div>
         </div>
