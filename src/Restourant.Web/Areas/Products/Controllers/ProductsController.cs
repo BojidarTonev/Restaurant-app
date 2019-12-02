@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.Services.Contracts;
@@ -84,6 +85,16 @@ namespace Restourant.Web.Areas.Products.Controllers
             this.ViewData["ProductCategories"] = categories;
             return View(dto);
 
+        }
+
+        [Authorize(Roles="Admin")]
+        public IActionResult CreateProduct()
+        {
+
+
+
+
+            return View();
         }
     }
 }

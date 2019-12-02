@@ -38,3 +38,7 @@
 .staff-button {
     background: var(--staff-color, red) !important;
 }
+
+.admin-button {
+    background: var(--admin-color, red) !important;
+}

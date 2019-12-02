@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.Data.Models;
@@ -25,6 +26,8 @@ namespace Restourant.Web.Areas.Tables.Controllers
             this._ordersService = ordersService;
             this._productsService = productsService;
         }
+
+        [Authorize(Roles="Admin")]
         public IActionResult All()
         {
             var waiterName = this.User.Identity.Name;
@@ -70,7 +73,7 @@ namespace Restourant.Web.Areas.Tables.Controllers
             var orders = new List<TableDetailsOrdersDto>();
             var totalProfit = 0m;
 
-            var userName = this._userManager.GetUserName(HttpContext.User);
+            var user = this._userManager.FindByIdAsync(table.UserId).Result.FirstName + " " + this._userManager.FindByIdAsync(table.UserId).Result.LastName;
 
             foreach (var order in tableOrders)
             {
@@ -89,7 +92,7 @@ namespace Restourant.Web.Areas.Tables.Controllers
             var tableDto = new TableDetailsDto()
             {
                  Name = table.Name,
-                 waiterName = userName,
+                 waiterName = user,
                  Orders = orders,
                  totalProfit = totalProfit.ToString()
             };
