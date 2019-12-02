@@ -15,7 +15,10 @@ namespace Restourant.Web.Areas.Tables.Controllers
         private readonly IOrdersService _ordersService;
         private readonly IProductsService _productsService;
         private readonly UserManager<RestaurantUser> _userManager;
-        public TablesController(ITablesService tablesService, UserManager<RestaurantUser> userManager, IOrdersService ordersService, IProductsService productsService)
+        public TablesController(ITablesService tablesService,
+            UserManager<RestaurantUser> userManager,
+            IOrdersService ordersService,
+            IProductsService productsService)
         {
             this._tablesService = tablesService;
             this._userManager = userManager;
@@ -64,22 +67,31 @@ namespace Restourant.Web.Areas.Tables.Controllers
         {
             var table = this._tablesService.GetTableById(tableId);
             var tableOrders = this._ordersService.AllOrdersForTableById(tableId);
-            var orders = new List<string>();
+            var orders = new List<TableDetailsOrdersDto>();
+            var totalProfit = 0m;
 
             var userName = this._userManager.GetUserName(HttpContext.User);
 
             foreach (var order in tableOrders)
             {
                 var product = this._productsService.GetProductById(order.ProductId);
-                var str = $"{product.Name} x {order.Quantity} = ${order.totalPrice}";
-                orders.Add(str);
+                var orderDto = new TableDetailsOrdersDto()
+                {
+                    productName = product.Name,
+                    quantity = order.Quantity.ToString(),
+                    totalPrice = order.totalPrice.ToString(),
+                    orderedOn = order.OrderedOn.ToLongTimeString()
+                };
+                totalProfit += order.totalPrice;
+                orders.Add(orderDto);
             }
 
             var tableDto = new TableDetailsDto()
             {
                  Name = table.Name,
                  waiterName = userName,
-                 Orders = orders
+                 Orders = orders,
+                 totalProfit = totalProfit.ToString()
             };
 
             return View(tableDto);

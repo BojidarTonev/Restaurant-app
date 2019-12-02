@@ -36,3 +36,9 @@
     border-radius: 0.4em;
 }
 
+.create-order-wrapper img {
+    max-width: 12em !important;
+    max-height: 15em !important;
+    border-radius: 20em;
+}
+

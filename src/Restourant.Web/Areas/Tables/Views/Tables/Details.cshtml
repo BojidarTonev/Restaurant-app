@@ -5,12 +5,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
 
-@foreach (var item in Model.Orders)
-{
-    <p>@item</p>
-}
+    <div class="table-details-wrapper">
+        <h1>Details for table @Model.Name</h1>
+        <hr />
+        <h3>Below are the orders for the table since the past 24h</h3>
+        <hr />
+        <h4>Total profit of that table for today: <strong>@Model.totalProfit $</strong></h4>
+
+        <p>The table is being currently served by:<strong class="waiter-name">@Model.waiterName</strong> </p>
+
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>quantity</th>
+                <th>total Sum</th>
+                <th>Time of Order</th>
+            </tr>
+            @foreach (var item in Model.Orders)
+            {
+                    <tr>
+                        <td>@item.productName</td>
+                        <td>@item.quantity</td>
+                        <td>@item.totalPrice $</td>
+                        <td>@item.orderedOn</td>
+                    </tr>
+            }
+        </table>
+        
+
+    </div>
 
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -74,6 +75,7 @@ namespace Restourant.Web.Areas.Orders.Controllers
             return Redirect("/");
         }
 
+        [Authorize]
         public IActionResult OrdersForUser()
         {
             var userId = this._userManager.GetUserId(HttpContext.User);

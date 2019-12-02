@@ -43,7 +43,7 @@ namespace Restaurant.Services
 
         public IQueryable<Order> AllOrdersForTableById(string tableId) => this._ordersRepository.All().Where(o => o.TableId == tableId);
 
-        public IQueryable<Order> AllOrdersForUserById(string userId) => this._ordersRepository.All().Where(o => o.UserId == userId);
+        public IQueryable<Order> AllOrdersForUserById(string userId) => this._ordersRepository.All().Where(o => o.UserId == userId).OrderByDescending(o => o.OrderedOn);
 
     }
 }

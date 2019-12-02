@@ -60,3 +60,41 @@
     margin: 0.5em;
     border-radius: 0.3em;
 }
+
+.waiter-name {
+    margin-left: 0.5em;
+    font-size: 1.3em;
+    color: cornflowerblue !important;
+}
+
+.table-details-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+    .table-details-wrapper th {
+        background-color: cornflowerblue;
+        color: black;
+        border-radius: 0.4em;
+        padding: 0.6em;
+    }
+
+    .table-details-wrapper td {
+        border: 2px solid black;
+        padding: 1em 1.5em;
+        border-radius: 0.4em;
+    }
+
+    .table-details-wrapper strong{
+        font-size: 1.5em;
+        color: red;
+    }
+
+    .table-details-wrapper hr {
+        width: 80%;
+        height: 0.3em;
+        background-color: black;
+    }
