@@ -1,0 +1,33 @@
+﻿@model UserOrdersDtoWrapper
+
+@{
+    ViewData["Title"] = "OrdersForUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="orders-wrapper">
+
+    <h1>All orders in the kitchen, chef: @Model.waiterName</h1>
+    <table>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Time of order</th>
+            <th>Status</th>
+        </tr>
+        @foreach (var item in Model.userOrders)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.quantity</td>
+                <td>@item.orderedOn</td>
+                <td>
+                <form asp-area="Orders" asp-controller="Orders" asp-action="CreatedKitchenOrder" method="post" enctype="multipart/form-data">
+                    <button type="submit" class="submit-order" asp-route-productId="@item.ProductId">Complete order</button>
+                </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

@@ -1,6 +1,7 @@
 ﻿using Restaurant.Data.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Restaurant.Services.Contracts
 {
@@ -15,5 +16,7 @@ namespace Restaurant.Services.Contracts
         Product GetProductById(string id);
 
         decimal GetPriceByName(string productName);
+
+        Task<bool> CreateProduct(string productName, string productImageUrl, decimal productPrice, string productDescription, string categoryId);
     }
 }

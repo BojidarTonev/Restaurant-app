@@ -15,7 +15,7 @@
         <form asp-area="Orders" asp-controller="Orders" asp-action="CreateOrder" method="post" enctype="multipart/form-data">
             <label asp-for="@Model.Quantity">Quantity:</label>
             <input asp-for="@Model.Quantity" type="number" name="quantity" value="0" />
-            <span asp-validation-for="@Model.Quantity"></span>
+            <span asp-validation-for="@Model.Quantity" class="validation-error"></span>
 
             <p>Please select the table you are currently sitting on.</p>
             <select asp-items="availableTables" asp-for="@Model.DisplayTable"></select>

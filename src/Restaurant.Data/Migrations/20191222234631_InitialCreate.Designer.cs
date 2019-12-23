@@ -10,8 +10,8 @@ using Restaurant.Data;
 namespace Restaurant.Data.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    [Migration("20191201194408_initialCreate")]
-    partial class initialCreate
+    [Migration("20191222234631_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -154,6 +154,8 @@ namespace Restaurant.Data.Migrations
 
                     b.Property<int>("Quantity");
 
+                    b.Property<string>("StatusId");
+
                     b.Property<string>("TableId");
 
                     b.Property<string>("UserId");
@@ -164,11 +166,25 @@ namespace Restaurant.Data.Migrations
 
                     b.HasIndex("ProductId");
 
+                    b.HasIndex("StatusId");
+
                     b.HasIndex("TableId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Restaurant.Data.Models.OrderStatus", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderStatuses");
                 });
 
             modelBuilder.Entity("Restaurant.Data.Models.Product", b =>
@@ -325,12 +341,16 @@ namespace Restaurant.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ProductId");
 
+                    b.HasOne("Restaurant.Data.Models.OrderStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
+
                     b.HasOne("Restaurant.Data.Models.Table", "Table")
                         .WithMany("Orders")
                         .HasForeignKey("TableId");
 
                     b.HasOne("Restaurant.Data.Models.RestaurantUser", "User")
-                        .WithMany()
+                        .WithMany("TakenOrders")
                         .HasForeignKey("UserId");
                 });
 

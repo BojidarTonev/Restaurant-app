@@ -90,11 +90,51 @@ namespace Restourant.Web.Areas.Products.Controllers
         [Authorize(Roles="Admin")]
         public IActionResult CreateProduct()
         {
+            var categories = this._categoriesService.GetAllCategories()
+                .Select(p => new SelectListItem()
+                {
+                    Value = p.Id,
+                    Text = p.Name.ToString()
+                });
 
-
-
+            this.ViewData["ProductCategories"] = categories;
 
             return View();
+        }
+
+        [Authorize(Roles="Admin")]
+        [HttpPost]
+        public IActionResult CreateProduct(CreateProductDto dto)
+        {
+            if (!this._productsService.CreateProduct(dto.ProductName, dto.ProductImageUrl, decimal.Parse(dto.ProductPrice), dto.ProductDescription, dto.ProductCategory).Result)
+            {
+                var categories = this._categoriesService.GetAllCategories()
+                .Select(p => new SelectListItem()
+                {
+                   Value = p.Id,
+                   Text = p.Name.ToString()
+                });
+
+                this.ViewData["ProductCategories"] = categories;
+
+                return View();
+            }
+
+            if (!TryValidateModel(dto))
+            {
+                var categories = this._categoriesService.GetAllCategories()
+                .Select(p => new SelectListItem()
+                {
+                    Value = p.Id,
+                    Text = p.Name.ToString()
+                });
+
+                this.ViewData["ProductCategories"] = categories;
+
+                return View();
+            }
+
+            return Redirect("/");
         }
     }
 }

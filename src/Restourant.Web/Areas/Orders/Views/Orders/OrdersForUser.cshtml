@@ -15,6 +15,7 @@
                 <th>Total Price</th>
                 <th>Table Name</th>
                 <th>Time of order</th>
+                <th>Status</th>
             </tr>
             @foreach (var item in Model.userOrders)
             {
@@ -24,6 +25,7 @@
                     <td>@item.totalPrice $</td>
                     <td>@item.TableName</td>
                     <td>@item.orderedOn</td>
+                    <td>@item.Status</td>
                 </tr>
             }
         </table>

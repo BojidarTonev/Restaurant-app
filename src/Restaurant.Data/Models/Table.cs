@@ -16,7 +16,7 @@ namespace Restaurant.Data.Models
         public string Name { get; set; }
 
         public string UserId { get; set; }
-        public RestaurantUser User { get; set; }
+        public virtual RestaurantUser User { get; set; }
 
         public decimal Total { get; set; }
 
@@ -26,6 +26,6 @@ namespace Restaurant.Data.Models
 
         public DateTime ActiveTo { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

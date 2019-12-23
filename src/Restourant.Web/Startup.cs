@@ -47,7 +47,7 @@ namespace Restourant.Web
 
             services.AddDbContext<RestaurantAppContext>(options =>
             {
-                options.UseSqlServer("Server=.;Database=RestaurantApp;Trusted_Connection=True;MultipleActiveResultSets=true");
+                options.UseSqlServer("Server=.;Database=RestaurantApp;Trusted_Connection=True;MultipleActiveResultSets=true").UseLazyLoadingProxies();
             });
 
 
@@ -67,6 +67,16 @@ namespace Restourant.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
+                using (var serviceScope = app.ApplicationServices.CreateScope())
+                {
+                    var context = serviceScope.ServiceProvider.GetRequiredService<RestaurantAppContext>();
+
+                    context.Database.Migrate();
+                    new DbSeeder().SeedAsync().GetAwaiter().GetResult();
+                   
+                }
+
             }
             else
             {
@@ -91,5 +101,6 @@ namespace Restourant.Web
                 );
             });
         }
+
     }
 }

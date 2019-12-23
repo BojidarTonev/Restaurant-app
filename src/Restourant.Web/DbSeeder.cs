@@ -9,17 +9,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurant.Sandbox
+namespace Restourant.Web
 {
-    class Program
+    public class DbSeeder
     {
-        static async Task Main(string[] args)
+        private static readonly string AdminRole = "Admin";
+        private static readonly string WaiterRole = "Waiter";
+        private static readonly string BarmanRole = "Barman";
+        private static readonly string ChefRole = "Chef";
+
+        public async Task SeedAsync()
         {
-            Console.OutputEncoding = Encoding.UTF8;
-            Console.WriteLine($"{typeof(Program).Namespace} ({string.Join(" ", args)}) starts working...");
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider(true);
@@ -27,14 +29,9 @@ namespace Restaurant.Sandbox
             using (var serviceScope = serviceProvider.CreateScope())
             {
                 serviceProvider = serviceScope.ServiceProvider;
-                await SandboxCodeAsync(serviceProvider);
+                await SeedDatabaseAsync(serviceProvider);
             }
-        }
 
-        private static async Task SandboxCodeAsync(IServiceProvider serviceProvider)
-        {
-            //Add code here..
-            await SeedDatabaseAsync(serviceProvider);
         }
 
         private static async Task SeedDatabaseAsync(IServiceProvider serviceProvider)
@@ -44,6 +41,7 @@ namespace Restaurant.Sandbox
             SeedCategories(serviceProvider);
             SeedProducts(serviceProvider);
             SeedOrderStatuses(serviceProvider);
+
         }
 
         private static async Task SeedTables(IServiceProvider serviceProvider)
@@ -59,11 +57,12 @@ namespace Restaurant.Sandbox
                 for (int i = 0; i < 5; i++)
                 {
                     var table = new Table();
-                    table.Name = $"Table №{i}" ;
-                    if(i % 2 == 0)
+                    table.Name = $"Table №{i}";
+                    if (i % 2 == 0)
                     {
                         table.UserId = petkoEmployee.Id;
-                    } else
+                    }
+                    else
                     {
                         table.UserId = ivanEmployee.Id;
                     }
@@ -111,12 +110,12 @@ namespace Restaurant.Sandbox
         {
             var db = serviceProvider.GetService<RestaurantAppContext>();
 
-            if (!db.Categories.AnyAsync().Result)
+            if (!db.OrderStatuses.AnyAsync().Result)
             {
                 var orderStatuses = GetOrderStatuses();
 
                 db.OrderStatuses.AddRange(orderStatuses);
-                db.SaveChangesAsync();
+                db.SaveChanges();
 
                 Console.WriteLine("All order statuses have been succesfully seeded to the database!");
             }
@@ -126,10 +125,11 @@ namespace Restaurant.Sandbox
         {
             var products = new List<Product>();
 
-            var bar = db.Categories.First(c => c.Name == Data.Models.Enums.Categories.Bar);
-            var kitchen = db.Categories.First(c => c.Name == Data.Models.Enums.Categories.Kitchen);
-            var dessert = db.Categories.First(c => c.Name == Data.Models.Enums.Categories.Dessert);
-            var other = db.Categories.First(c => c.Name == Data.Models.Enums.Categories.Other);
+            var bar = db.Categories.First(c => c.Name == Restaurant.Data.Models.Enums.Categories.Bar);
+            var kitchen = db.Categories.First(c => c.Name == Restaurant.Data.Models.Enums.Categories.Kitchen);
+            var dessert = db.Categories.First(c => c.Name == Restaurant.Data.Models.Enums.Categories.Dessert);
+            var other = db.Categories.First(c => c.Name == Restaurant.Data.Models.Enums.Categories.Other);
+            var barSlow = db.Categories.First(c => c.Name == Restaurant.Data.Models.Enums.Categories.BarSlow);
 
             //Bar products
             var product0 = new Product() { Name = "Coca-Cola", Category = bar, Description = "gazirarno i vredno", Price = 1.20m, ImageUrl = "http://www.cantina-ola.com/media/7/21.jpg" };
@@ -147,6 +147,10 @@ namespace Restaurant.Sandbox
             var product8 = new Product() { Name = "Fruit salad", Category = dessert, Description = "best in vitamins and stuff", Price = 8.40m, ImageUrl = "http://assets.kulinaria.bg/attachments/pictures-images/0000/5689/MAIN-2015-07-31-11-14-39-0300-0-1-2.jpg?1438330483" };
             var product9 = new Product() { Name = "Pancakes", Category = dessert, Description = "tastiest pankaces ever lol", Price = 2.50m, ImageUrl = "https://ezine.bg/files/lib/600x350/palachinki18.jpg" };
 
+            //Bar slow products
+            var product10 = new Product() { Name = "Mojito", Category = barSlow, Description = "best Mojito ever to be made", Price = 10.90m, ImageUrl = "https://cdn.liquor.com/wp-content/uploads/2018/09/04153106/mojito-720x720-recipe.jpg" };
+            var product11 = new Product() { Name = "Sex on the beach", Category = barSlow, Description = "best sex on the beach ever to be made lol", Price = 9.50m, ImageUrl = "https://makemeacocktail.com/images/cocktails/6798/sex_on_the_breach_2.jpg" };
+
             products.Add(product0);
             products.Add(product1);
             products.Add(product2);
@@ -157,6 +161,8 @@ namespace Restaurant.Sandbox
             products.Add(product7);
             products.Add(product8);
             products.Add(product9);
+            products.Add(product10);
+            products.Add(product11);
 
             return products;
         }
@@ -171,10 +177,10 @@ namespace Restaurant.Sandbox
 
                 Task.Run(async () =>
                 {
-                    var adminRole = GlobalConstants.AdminRole;
-                    var waiterRole = GlobalConstants.WaiterRole;
-                    var barmanRole = GlobalConstants.BarmanRole;
-                    var chefRole = GlobalConstants.ChefRole;
+                    var adminRole = AdminRole;
+                    var waiterRole = WaiterRole;
+                    var barmanRole = BarmanRole;
+                    var chefRole = ChefRole;
 
                     await roleManager.CreateAsync(new IdentityRole
                     {
@@ -191,10 +197,10 @@ namespace Restaurant.Sandbox
                         Name = barmanRole
                     });
 
-                    await roleManager.CreateAsync(new IdentityRole
-                    {
-                        Name = chefRole
-                    });
+                   await roleManager.CreateAsync(new IdentityRole
+                   {
+                       Name = chefRole
+                   });
 
                 }).Wait();
             }
@@ -241,26 +247,26 @@ namespace Restaurant.Sandbox
                     var chefPassword = "cheff123";
                     var chef = new RestaurantUser()
                     {
-                        UserName = "Chef Manchev",
+                        UserName = "Chef",
                         Email = "chef.manchev@chef.com",
                         FirstName = "Chef",
                         LastName = "Manchev"
                     };
 
                     await userManager.CreateAsync(admin, adminPasswrod);
-                    await userManager.AddToRoleAsync(admin, GlobalConstants.AdminRole);
+                    await userManager.AddToRoleAsync(admin, AdminRole);
 
                     await userManager.CreateAsync(waiter, waiterPassword);
-                    await userManager.AddToRoleAsync(waiter, GlobalConstants.WaiterRole);
+                    await userManager.AddToRoleAsync(waiter, WaiterRole);
 
                     await userManager.CreateAsync(waiter2, waiterPassword);
-                    await userManager.AddToRoleAsync(waiter2, GlobalConstants.WaiterRole);
+                    await userManager.AddToRoleAsync(waiter2, WaiterRole);
 
                     await userManager.CreateAsync(barman, barmanPassword);
-                    await userManager.AddToRoleAsync(barman, GlobalConstants.BarmanRole);
+                    await userManager.AddToRoleAsync(barman, BarmanRole);
 
-                    await userManager.CreateAsync(chef, chefPassword);
-                    await userManager.AddToRoleAsync(chef, GlobalConstants.ChefRole);
+                   await userManager.CreateAsync(chef, chefPassword);
+                   await userManager.AddToRoleAsync(chef, ChefRole);
 
                 }).Wait();
 
@@ -273,7 +279,6 @@ namespace Restaurant.Sandbox
         private static void ConfigureServices(ServiceCollection services)
         {
             var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", false, true)
                 .Build();
 
             services.AddDbContext<RestaurantAppContext>(options =>
@@ -299,25 +304,30 @@ namespace Restaurant.Sandbox
 
             var bar = new Category()
             {
-                Name = Data.Models.Enums.Categories.Bar
+                Name = Restaurant.Data.Models.Enums.Categories.Bar
             };
             var kitchen = new Category()
             {
-                Name = Data.Models.Enums.Categories.Kitchen
+                Name = Restaurant.Data.Models.Enums.Categories.Kitchen
             };
             var dessert = new Category()
             {
-                Name = Data.Models.Enums.Categories.Dessert
+                Name = Restaurant.Data.Models.Enums.Categories.Dessert
             };
             var other = new Category()
             {
-                Name = Data.Models.Enums.Categories.Other
+                Name = Restaurant.Data.Models.Enums.Categories.Other
+            };
+            var barSlow = new Category()
+            {
+                Name = Restaurant.Data.Models.Enums.Categories.BarSlow
             };
 
             categories.Add(bar);
             categories.Add(kitchen);
             categories.Add(dessert);
             categories.Add(other);
+            categories.Add(barSlow);
 
             return categories;
         }
@@ -328,11 +338,11 @@ namespace Restaurant.Sandbox
 
             var preparing = new OrderStatus()
             {
-                Status = Data.Models.Enums.OrderStatus.Preapring
+                Status = Restaurant.Data.Models.Enums.OrderStatus.Preapring
             };
             var ready = new OrderStatus()
             {
-                Status = Data.Models.Enums.OrderStatus.Ready
+                Status = Restaurant.Data.Models.Enums.OrderStatus.Ready
             };
 
             statuses.Add(preparing);

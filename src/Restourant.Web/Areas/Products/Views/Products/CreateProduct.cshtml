@@ -1,8 +1,35 @@
-﻿
-@{
-    ViewData["Title"] = "CreateProduct";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model CreateProductDto
 
-<h1>CreateProduct</h1>
+@{
+    ViewData["Title"] = "Create Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var productCategories = this.ViewData["ProductCategories"] as IEnumerable<SelectListItem>;
+}
+    <div class="create-product-wrapper">
+        <h1>@ViewData["Title"] and add it to the menu</h1>
+        <hr />
+        <form asp-area="Products" asp-controller="Products" asp-action="CreateProduct" method="post">
+            <label asp-for="@Model.ProductName">Product Name:</label>
+            <input type="text" asp-for="@Model.ProductName" />
+            <span asp-validation-for="@Model.ProductName" class="validation-error"></span>
+            
+            <label asp-for="@Model.ProductImageUrl">Product Image Url:</label>
+            <input type="text" asp-for="@Model.ProductImageUrl" />
+            <span asp-validation-for="@Model.ProductImageUrl" class="validation-error"></span>
+
+            <label asp-for="@Model.ProductPrice">Product Price:</label>
+            <input type="number" asp-for="@Model.ProductPrice" />
+            <span asp-validation-for="@Model.ProductPrice" class="validation-error"></span>
+
+            <label asp-for="@Model.ProductDescription">Product Description:</label>
+            <textarea asp-for="@Model.ProductDescription" rows="4" cols="50"></textarea>
+            <span asp-validation-for="@Model.ProductDescription"></span>
+
+            <select asp-items="@productCategories" asp-for="@Model.ProductCategory"></select>
+
+            <input type="submit" value="Create!" class="create-product-button" />
+        </form>
+    </div> 
+
 

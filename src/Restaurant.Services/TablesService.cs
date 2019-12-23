@@ -15,7 +15,7 @@ namespace Restaurant.Services
 
         public IQueryable<Table> AllTables()
         {
-            return this._tablesRepository.All();
+            return this._tablesRepository.All().OrderBy(t => t.Name);
         }
         public IQueryable<Table> AllAvailableTables()
         {

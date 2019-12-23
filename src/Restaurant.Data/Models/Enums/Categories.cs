@@ -3,8 +3,9 @@
     public enum Categories
     {
         Bar = 1,
-        Kitchen = 2,
-        Dessert = 3,
-        Other = 4
+        BarSlow = 2,
+        Kitchen = 3,
+        Dessert = 4,
+        Other = 5,
     }
 }

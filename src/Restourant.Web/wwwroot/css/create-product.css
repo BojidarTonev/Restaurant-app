@@ -1,0 +1,69 @@
+﻿.create-product-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.create-product-button {
+    padding: 3em;
+    box-shadow: none;
+    border: none;
+    color: black;
+    background: var(--admin-color, red) !important;
+    margin: 1.5em;
+}
+
+.create-product-wrapper form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 35%;
+    background-color: yellowgreen;
+    border-radius: 4em;
+    margin: 2em 0;
+}
+
+    .create-product-wrapper hr {
+        background-color: black;
+        height: 0.3em;
+        width: 60%;
+    }
+
+    .create-product-wrapper form label {
+        color: black;
+        padding: 0.5em;
+        margin-top: 0.3em;
+        width: 15em;
+        text-align: left
+    }
+
+        .create-product-wrapper form input {
+            width: 60%;
+            border-radius: 1em;
+            box-shadow: none;
+            border: none;
+            background-color: burlywood;
+            padding: 0.5em;
+        }
+
+        .create-product-wrapper form textarea {
+            border-radius: 1em;
+            box-shadow: none;
+            border: none;
+            background-color: burlywood;
+            padding: 0.5em;
+        }
+
+        .create-product-wrapper form select {
+            border-radius: 1em;
+            box-shadow: none;
+            border: none;
+            background-color: burlywood;
+            padding: 0.5em;
+            color: black;
+            margin: 1em 0;
+        }

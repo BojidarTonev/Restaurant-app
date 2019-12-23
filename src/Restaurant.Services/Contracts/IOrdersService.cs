@@ -13,5 +13,9 @@ namespace Restaurant.Services.Contracts
         IQueryable<Order> AllOrdersForUserById(string userId);
 
         IQueryable<Order> AllOrdersForTableById(string tableId);
+
+        IQueryable<Order> AllKitchenOrders();
+
+        IQueryable<Order> AllBarOrders();
     }
 }

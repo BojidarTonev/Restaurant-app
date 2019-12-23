@@ -12,6 +12,6 @@ namespace Restaurant.Data.Models
 
         public string ImageUrl { get; set; }
 
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

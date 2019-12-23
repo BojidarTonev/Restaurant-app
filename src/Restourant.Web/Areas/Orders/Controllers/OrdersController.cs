@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.Data.Models;
 using Restaurant.Services.Contracts;
 using Restourant.Web.Areas.Orders.Models;
-using Restourant.Web.Areas.Products.Models;
 
 namespace Restourant.Web.Areas.Orders.Controllers
 {
@@ -88,8 +86,67 @@ namespace Restourant.Web.Areas.Orders.Controllers
                     ProductName = o.Product.Name,
                     quantity = o.Quantity.ToString(),
                     TableName = o.Table.Name,
-                    totalPrice = o.totalPrice.ToString()
+                    totalPrice = o.totalPrice.ToString(),
+                    Status = o.Status.Status.ToString()
                 }).ToList();
+
+            var dto = new UserOrdersDtoWrapper()
+            {
+                userOrders = ordersForUser,
+                waiterName = userName
+            };
+
+            return View(dto);
+        }
+
+        [Authorize(Roles = "Chef")]
+        public IActionResult OrdersForKitchen()
+        {
+            var userId = this._userManager.GetUserId(HttpContext.User);
+            var userName = this._userManager.GetUserName(HttpContext.User);
+
+            var ordersForUser = this._ordersService.AllKitchenOrders()
+             .Select(o => new UsersOrderDto()
+             {
+                 orderedOn = o.OrderedOn.ToLongTimeString(),
+                 ProductName = o.Product.Name,
+                 quantity = o.Quantity.ToString(),
+                 ProductId = o.ProductId
+             }).ToList();
+
+            var dto = new UserOrdersDtoWrapper()
+            {
+                userOrders = ordersForUser,
+                waiterName = userName
+            };
+
+            return View(dto);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Chef")]
+        public IActionResult CreatedKitchenOrder(string productId)
+        {
+            var order = this._ordersService.All().First(o => o.ProductId == productId);
+            
+            
+            return Redirect("/");
+        }
+
+        [Authorize(Roles = "Barman")]
+        public IActionResult OrdersForBar()
+        {
+            var userId = this._userManager.GetUserId(HttpContext.User);
+            var userName = this._userManager.GetUserName(HttpContext.User);
+
+            var ordersForUser = this._ordersService.AllBarOrders()
+             .Select(o => new UsersOrderDto()
+             {
+                 orderedOn = o.OrderedOn.ToLongTimeString(),
+                 ProductName = o.Product.Name,
+                 quantity = o.Quantity.ToString(),
+                 ProductId = o.ProductId
+             }).ToList();
 
             var dto = new UserOrdersDtoWrapper()
             {

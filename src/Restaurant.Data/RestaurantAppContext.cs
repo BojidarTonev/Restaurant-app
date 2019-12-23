@@ -19,6 +19,8 @@ namespace Restaurant.Data
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

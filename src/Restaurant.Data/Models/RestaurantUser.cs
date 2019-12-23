@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
-using Restaurant.Data.Models.Enums;
 
 namespace Restaurant.Data.Models
 {
@@ -9,6 +8,7 @@ namespace Restaurant.Data.Models
         public RestaurantUser()
         {
             this.TablesServed = new List<Table>();
+            this.TakenOrders = new List<Order>();
         }
         public string FirstName { get; set; }
 
@@ -16,6 +16,8 @@ namespace Restaurant.Data.Models
 
         public string Password { get; set; }
 
-        public ICollection<Table> TablesServed { get; set; }
+        public virtual ICollection<Table> TablesServed { get; set; }
+
+        public virtual ICollection<Order> TakenOrders { get; set; }
     }
 }

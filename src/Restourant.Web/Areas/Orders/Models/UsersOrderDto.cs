@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Restourant.Web.Areas.Orders.Models
+﻿namespace Restourant.Web.Areas.Orders.Models
 {
     public class UsersOrderDto
     {
@@ -18,6 +13,10 @@ namespace Restourant.Web.Areas.Orders.Models
         public string quantity { get; set; }
 
         public string orderedOn { get; set; }
+
+        public string ProductId { get; set; }
+
+        public string Status { get; set; }
 
     }
 }

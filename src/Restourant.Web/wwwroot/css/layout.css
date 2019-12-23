@@ -31,5 +31,8 @@
         background: black;
     }
 
-@media (min-width: 1024px) {
+.validation-error {
+    font-size: 1em;
+    color: red;
+    font-style: italic;
 }

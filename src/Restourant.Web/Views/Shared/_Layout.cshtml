@@ -20,19 +20,17 @@
                 </li>
                 @if (this.User.Identity.IsAuthenticated)
                 {
+
                     @if (this.User.IsInRole("Admin"))
                     {
                         <li>
                             <a asp-area="Tables" asp-controller="Tables" asp-action="All" class="admin-button">All Tables</a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="" asp-action="" class="admin-button">Add product to menu</a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="" asp-action="" class="admin-button">Assign table to employee</a>
+                            <a asp-area="Products" asp-controller="Products" asp-action="CreateProduct" class="admin-button">Add product to menu</a>
                         </li>
                     }
-                    else if (this.User.IsInRole("Staff"))
+                    else if (this.User.IsInRole("Waiter"))
                     {
                         <li>
                             <a asp-area="Orders" asp-controller="Orders" asp-action="OrdersForUser" class="staff-button">My orders</a>
@@ -41,11 +39,29 @@
                             <a asp-area="Tables" asp-controller="Tables" asp-action="AllTablesForUser" class="staff-button">My Tables</a>
                         </li>
                     }
+                    else if (this.User.IsInRole("Chef"))
+                    {
+                        <li>
+                            <a asp-area="Orders" asp-controller="Orders" asp-action="OrdersForKitchen" class="staff-button">Kitchen orders</a>
+                        </li>
+                    }
+                    else if (this.User.IsInRole("Barman"))
+                    {
+                        <li>
+                            <a asp-area="Orders" asp-controller="Orders" asp-action="OrdersForBar" class="staff-button">Bar orders</a>
+                        </li>
+                    }
+
+                    
                 }
             </ul>
             <ul class="right-items">
                 @if (this.User.Identity.IsAuthenticated)
                 {
+                    <li>
+                        Welcome, @this.User.Identity.Name
+                    </li>
+
                     <li>
                         <a asp-area="Identity" asp-page="/Account/Logout">Logout</a>
                     </li>
@@ -64,7 +80,7 @@
     </header>
     <div class="container">
         <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
+        <main role="main" class="main-body">
             @RenderBody()
         </main>
     </div>

@@ -11,17 +11,32 @@ namespace Restaurant.Services
     {
         private readonly IRepository<Order> _ordersRepository;
         private readonly IRepository<Table> _tablesRepository;
-        public OrdersService(IRepository<Order> ordersRepository, IRepository<Table> tablesRepository)
+        private readonly IRepository<Category> _categoriesRepository;
+        private readonly IRepository<OrderStatus> _orderStatusRepository;
+        private readonly IRepository<Product> _productsRepository;
+        public OrdersService(IRepository<Order> ordersRepository, IRepository<Table> tablesRepository, IRepository<Category> categoriesRepostory, IRepository<OrderStatus> orderStatusRepository, IRepository<Product> productsRepository)
         {
             this._ordersRepository = ordersRepository;
             this._tablesRepository = tablesRepository;
+            this._categoriesRepository = categoriesRepostory;
+            this._orderStatusRepository = orderStatusRepository;
+            this._productsRepository = productsRepository;
         }
 
         public async Task<bool> AddOrder(string tableId, DateTime orderTime, int quantity, string productId, decimal totalPrice)
         {
-            if(tableId == null || productId == null) { return false; }
+            if (tableId == null || productId == null) { return false; }
 
             var userId = this._tablesRepository.All().First(t => t.Id == tableId).UserId;
+            var product = this._productsRepository.All().First(p => p.Id == productId);
+            var orderStatus = this._orderStatusRepository.All().First(os => os.Status == Restaurant.Data.Models.Enums.OrderStatus.Ready);
+            if(product.Category == this._categoriesRepository.All().First(c => c.Name == Restaurant.Data.Models.Enums.Categories.Kitchen) || product.Category == this._categoriesRepository.All().First(c => c.Name == Restaurant.Data.Models.Enums.Categories.Dessert))
+            {
+                orderStatus = this._orderStatusRepository.All().First(os => os.Status == Restaurant.Data.Models.Enums.OrderStatus.Preapring);
+            } else if (product.Category == this._categoriesRepository.All().First(c => c.Name == Restaurant.Data.Models.Enums.Categories.BarSlow))
+            {
+                orderStatus = this._orderStatusRepository.All().First(os => os.Status == Restaurant.Data.Models.Enums.OrderStatus.Preapring);
+            }
 
             var order = new Order()
             {
@@ -30,7 +45,8 @@ namespace Restaurant.Services
                 TableId = tableId,
                 totalPrice = totalPrice,
                 OrderedOn = orderTime,
-                UserId = userId
+                UserId = userId,
+                Status = orderStatus
             };
 
             await this._ordersRepository.AddAsync(order);
@@ -44,6 +60,22 @@ namespace Restaurant.Services
         public IQueryable<Order> AllOrdersForTableById(string tableId) => this._ordersRepository.All().Where(o => o.TableId == tableId);
 
         public IQueryable<Order> AllOrdersForUserById(string userId) => this._ordersRepository.All().Where(o => o.UserId == userId).OrderByDescending(o => o.OrderedOn);
+
+        public IQueryable<Order> AllKitchenOrders()
+        {
+            var kitchenCategory = _categoriesRepository.All().First(c => c.Name == Restaurant.Data.Models.Enums.Categories.Kitchen);
+            var orders = this._ordersRepository.All().Where(o => o.Product.Category == kitchenCategory);
+
+            return orders;
+        }
+
+        public IQueryable<Order> AllBarOrders()
+        {
+            var barSlowCatregory = _categoriesRepository.All().First(c => c.Name == Restaurant.Data.Models.Enums.Categories.BarSlow);
+            var orders = this._ordersRepository.All().Where(o => o.Product.Category == barSlowCatregory);
+
+            return orders;
+        }
 
     }
 }
