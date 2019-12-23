@@ -1,9 +1,57 @@
-This is a web restourant buissiness based software with the idea to make the work process in restaurants much easier and smoother.
-The web application is written on ASP.NET Core 2.2 with Razor Pages, following the MVC pattern. For data storage MSSQL local database is being used which is being accessed
-via Entity Framework Core. In the database the main idea is to have Entity hierarchy having the User class entity containg all the information in the platform entries 
-beneath. User entities have table entities data that have been served by them, and the tables themselves contain information about the orders, total sum and products that 
-were ordered in the time period that they were active. To achieve that hierarchy the database has two One-To-Many relations between the entities. These relations are 
-between  Tables and Orders, one Table has many Orders and one Order can have just one Table. Relativly the same is with Orders having multiple Products at once and the 
-Product that can have just one order to be in.
+This is a web restourant buissiness based software with the idea to make the work process in restaurants easier and smoother.
+The web application is written on ASP.NET Core 2.2 with Razor Pages, following the MVC pattern. 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+The User classes has Roles which are "Waiter", "Barman", "Chef", "Admin"
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+##WAITER
+Users assigned with the Role Waiter have access to the Tables that are assigned to them. They can see all the orders for which the current user is responsible for, when
+some has made that order on a table that is assigned to the Waiter. Also these users can see when the Status of an order is completed if the order is from the Kitchen
+or the Barman for e.g. if it is cocktail or a slow preapred drink.
+
+##CHEF
+Users assigned with the Role Chef have access to all the orders that are made for the Kitchen. When they have cooked the meal the have to press "Finish order!" so that the
+status of it can change and the Waiter resposible for the service of that order can know when to go and pick it up to serve it to the clients on the coresponding table.
+
+##BARMAN
+Users assigned with the Role Barman have access to all the orders that are made for the Bar and requried more time to be prepared, for example cocktailes. When the bartender
+has completed the order, he/she has to press "Finish order!" so that the status of it can change and the Waiter resposible for the service can know that he can go and pick up
+the order product and serve it to the table where the clients are.
+
+#ADMIN
+Users assigned with the Role Admin have access to all the orders that have been made in the Restaurant and all the Tables. Admins can also create and add products to the menu.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+		###DATABASE SPECIFICS###
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+For data storage MSSQL local database is being used which is being accessed via Entity Framework Core. In the database the main idea is to have Entity hierarchy having 
+the User class entity containg all the information in the platform entries beneath.
+The data context is being accessed through IRepository layer which supprots all CRUD operations (except delete in this case lol)
+There are two enumerations which contain all the possible Categories and OrderStatuses of the products/orders.
+The implementation of the Database is as follows: when you run the application in checks if you are in developmen mode and if you are, it checks if there is currently
+existing database and if there's not it runs the migrations createing the database and updating it.
+After that the class "DbSeeder" is called which checks if you have currently any data in the Database and if there is not it automatically seeds the DB with sample data.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+		###ARCHITECTURE###
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 For the back-end of the login, register and logout functionality and folder structure has been used Scaffolded Identity from ASP.NET Core.
-The architecture of the Models, Views and Controllers has been used in Areas, each containing only the files that it's dependant on.
+All the logic of the buissiness logic of the application is contained in the Restaurant.Services .csproj, and those services are responsible for the logic behind getting and returnign
+data to the Controllers who requrie them with Dependency Injection, so they wont have to be instantiated over and over again.
+The DataBase implementation is also seperated in another .csproj which is Restaurant.Data.
+The models of the database and all their relations are also in the Restaurant.Data .csproj
+The Models, Views and Controllers have been used in Areas, each containing only the files that it's dependant on.
+
+The idea behind login and register is that only employees have to register so they can have a role assigned to them and work in the Restaurant. Ordinary clients don't have
+to register in order to create an order. They have to just sit on a table choose their products of desire and the table they are sitting on, and place the order. The waiter
+who is responsible for the orders of the table they ahve placed the order will see the newly created order and will go the serve the product to them. If the order includes 
+something form the kitchen or the bar that does require time to be created it will show on the log of the workers in the bar/kitchen and they have to click "Finish order"
+once they are done preapring it. This click will notify the waiter who has to take care of the order. 
+
+============================================================================================================================================================================
+that's it! =)
+
+
