@@ -61,4 +61,10 @@ once they are done preapring it. This click will notify the waiter who has to ta
 ============================================================================================================================================================================
 that's it! =)
 
+============================================================================================================================================================================
+If you experience any troubleshooting creating the initial database, it's probably because your OS can't configure the server with ".". To fix this issue, you have to 
+replace the connectiong string Server= value to equal not ".", but the name of your localhost instead.
+============================================================================================================================================================================
+
+
 
