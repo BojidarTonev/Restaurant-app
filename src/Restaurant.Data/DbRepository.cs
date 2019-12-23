@@ -33,6 +33,12 @@ namespace Restaurant.Data
             this._dbSet.Remove(entity);
         }
 
+        public void Update(TEntity entity)
+        {
+            this._dbSet.Update(entity);
+            this._context.SaveChanges();
+        }
+
         public Task<int> SaveChangesAsync()
         {
             return this._context.SaveChangesAsync();
@@ -42,5 +48,7 @@ namespace Restaurant.Data
         {
             this._context.Dispose();
         }
+
+        
     }
 }

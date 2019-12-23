@@ -23,12 +23,12 @@
     text-align: center;
 }
 
-.orders-wrapper th {
-    background: green;
-    color: black;
-    border-radius: 0.4em;
-    padding: 0.6em;
-}
+    .orders-wrapper th {
+        background: #dbc027;
+        color: black;
+        border-radius: 0.4em;
+        padding: 0.6em;
+    }
 
 .orders-wrapper td {
     border: 2px solid black;
@@ -40,5 +40,22 @@
     max-width: 12em !important;
     max-height: 15em !important;
     border-radius: 20em;
+}
+
+.kitchen-orders th {
+    background: #de3c3c !important;
+}
+
+.barman-orders th {
+    background: #447ce3 !important;
+}
+
+.orders-wrapper form {
+    height: 1.5em !important;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 

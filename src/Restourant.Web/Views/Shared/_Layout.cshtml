@@ -33,22 +33,22 @@
                     else if (this.User.IsInRole("Waiter"))
                     {
                         <li>
-                            <a asp-area="Orders" asp-controller="Orders" asp-action="OrdersForUser" class="staff-button">My orders</a>
+                            <a asp-area="Orders" asp-controller="Orders" asp-action="OrdersForUser" class="waiter-button">My orders</a>
                         </li>
                         <li>
-                            <a asp-area="Tables" asp-controller="Tables" asp-action="AllTablesForUser" class="staff-button">My Tables</a>
+                            <a asp-area="Tables" asp-controller="Tables" asp-action="AllTablesForUser" class="waiter-button">My Tables</a>
                         </li>
                     }
                     else if (this.User.IsInRole("Chef"))
                     {
                         <li>
-                            <a asp-area="Orders" asp-controller="Orders" asp-action="OrdersForKitchen" class="staff-button">Kitchen orders</a>
+                            <a asp-area="Orders" asp-controller="Orders" asp-action="OrdersForKitchen" class="cheff-button">Kitchen orders</a>
                         </li>
                     }
                     else if (this.User.IsInRole("Barman"))
                     {
                         <li>
-                            <a asp-area="Orders" asp-controller="Orders" asp-action="OrdersForBar" class="staff-button">Bar orders</a>
+                            <a asp-area="Orders" asp-controller="Orders" asp-action="OrdersForBar" class="barman-button">Bar orders</a>
                         </li>
                     }
 

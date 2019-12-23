@@ -35,10 +35,18 @@
     top: 1.5em;
 }
 
-.staff-button {
-    background: var(--staff-color, red) !important;
+.waiter-button {
+    background: #dbc027 !important;
 }
 
 .admin-button {
-    background: var(--admin-color, red) !important;
+    background: #27db3f !important;
+}
+
+.cheff-button {
+    background: #de3c3c !important;
+}
+
+.barman-button {
+    background: #447ce3 !important;
 }

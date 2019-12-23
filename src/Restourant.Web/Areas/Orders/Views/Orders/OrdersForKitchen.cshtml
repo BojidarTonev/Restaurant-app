@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="orders-wrapper">
+<div class="orders-wrapper kitchen-orders">
 
-    <h1>All orders in the kitchen, chef: @Model.waiterName</h1>
+    <h1>All orders in the kitchen, chef: @Model.userName</h1>
     <table>
         <tr>
             <th>Product Name</th>
@@ -22,9 +22,10 @@
                 <td>@item.quantity</td>
                 <td>@item.orderedOn</td>
                 <td>
-                <form asp-area="Orders" asp-controller="Orders" asp-action="CreatedKitchenOrder" method="post" enctype="multipart/form-data">
-                    <button type="submit" class="submit-order" asp-route-productId="@item.ProductId">Complete order</button>
-                </form>
+                    <form asp-area="Orders" asp-controller="Orders" asp-action="ChangeStatusOfOrder" method="post">
+                        <input type="hidden" value="@item.OrderId" name="OrderId" />
+                        <button type="submit" class="submit-order">Complete order</button>
+                    </form>
                 </td>
             </tr>
         }

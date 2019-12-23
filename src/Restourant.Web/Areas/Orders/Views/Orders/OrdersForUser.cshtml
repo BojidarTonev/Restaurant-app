@@ -7,7 +7,7 @@
 
     <div class="orders-wrapper">
 
-        <h1>All orders for employee: @Model.waiterName</h1>
+        <h1>All orders for employee: @Model.userName</h1>
         <table>
             <tr>
                 <th>Product Name</th>
@@ -19,14 +19,29 @@
             </tr>
             @foreach (var item in Model.userOrders)
             {
-                <tr>
-                    <td>@item.ProductName</td>
-                    <td>@item.quantity</td>
-                    <td>@item.totalPrice $</td>
-                    <td>@item.TableName</td>
-                    <td>@item.orderedOn</td>
-                    <td>@item.Status</td>
-                </tr>
+                @if (item.Status == "Preapring")
+                {
+                    <tr style="background: #eb493d; color: black">
+                        <td>@item.ProductName</td>
+                        <td>@item.quantity</td>
+                        <td>@item.totalPrice $</td>
+                        <td>@item.TableName</td>
+                        <td>@item.orderedOn</td>
+                        <td>@item.Status</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr style="background: #39bf45; color: black">
+                        <td>@item.ProductName</td>
+                        <td>@item.quantity</td>
+                        <td>@item.totalPrice $</td>
+                        <td>@item.TableName</td>
+                        <td>@item.orderedOn</td>
+                        <td>@item.Status</td>
+                    </tr>
+                }
+
             }
         </table>
     </div>

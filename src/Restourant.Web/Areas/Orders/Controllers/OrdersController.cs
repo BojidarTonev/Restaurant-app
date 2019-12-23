@@ -73,7 +73,7 @@ namespace Restourant.Web.Areas.Orders.Controllers
             return Redirect("/");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Waiter")]
         public IActionResult OrdersForUser()
         {
             var userId = this._userManager.GetUserId(HttpContext.User);
@@ -93,7 +93,7 @@ namespace Restourant.Web.Areas.Orders.Controllers
             var dto = new UserOrdersDtoWrapper()
             {
                 userOrders = ordersForUser,
-                waiterName = userName
+                userName = userName
             };
 
             return View(dto);
@@ -111,13 +111,14 @@ namespace Restourant.Web.Areas.Orders.Controllers
                  orderedOn = o.OrderedOn.ToLongTimeString(),
                  ProductName = o.Product.Name,
                  quantity = o.Quantity.ToString(),
-                 ProductId = o.ProductId
+                 ProductId = o.ProductId,
+                 OrderId = o.Id
              }).ToList();
 
             var dto = new UserOrdersDtoWrapper()
             {
                 userOrders = ordersForUser,
-                waiterName = userName
+                userName = userName
             };
 
             return View(dto);
@@ -145,16 +146,26 @@ namespace Restourant.Web.Areas.Orders.Controllers
                  orderedOn = o.OrderedOn.ToLongTimeString(),
                  ProductName = o.Product.Name,
                  quantity = o.Quantity.ToString(),
-                 ProductId = o.ProductId
+                 ProductId = o.ProductId,
+                 OrderId = o.Id
              }).ToList();
 
             var dto = new UserOrdersDtoWrapper()
             {
                 userOrders = ordersForUser,
-                waiterName = userName
+                userName = userName
             };
 
             return View(dto);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Chef, Barman")]
+        public IActionResult ChangeStatusOfOrder(string orderId)
+        {
+            var order = this._ordersService.GetOrderById(orderId);
+            this._ordersService.ChangeOrderStatus(order);
+            return Redirect("/");
         }
     }
 }

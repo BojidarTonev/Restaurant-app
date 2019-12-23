@@ -63,19 +63,42 @@ namespace Restaurant.Services
 
         public IQueryable<Order> AllKitchenOrders()
         {
-            var kitchenCategory = _categoriesRepository.All().First(c => c.Name == Restaurant.Data.Models.Enums.Categories.Kitchen);
-            var orders = this._ordersRepository.All().Where(o => o.Product.Category == kitchenCategory);
+            var preapringStatus = this._orderStatusRepository.All().First(os => os.Status == Restaurant.Data.Models.Enums.OrderStatus.Preapring);
 
-            return orders;
+            var kitchenCategory = _categoriesRepository.All().First(c => c.Name == Restaurant.Data.Models.Enums.Categories.Kitchen);
+            var dessertCategory = _categoriesRepository.All().First(c => c.Name == Restaurant.Data.Models.Enums.Categories.Dessert);
+            var orders = this._ordersRepository.All().Where(o => o.Product.Category == kitchenCategory || o.Product.Category == dessertCategory);
+
+            var ordersForReturn = orders.Where(o => o.Status == preapringStatus).OrderByDescending(o => o.OrderedOn);
+
+            return ordersForReturn;
         }
 
         public IQueryable<Order> AllBarOrders()
         {
+            var preapringStatus = this._orderStatusRepository.All().First(os => os.Status == Restaurant.Data.Models.Enums.OrderStatus.Preapring);
+
             var barSlowCatregory = _categoriesRepository.All().First(c => c.Name == Restaurant.Data.Models.Enums.Categories.BarSlow);
-            var orders = this._ordersRepository.All().Where(o => o.Product.Category == barSlowCatregory);
+            var orders = this._ordersRepository.All().Where(o => o.Product.Category == barSlowCatregory && o.Status == preapringStatus).OrderByDescending(o => o.OrderedOn);
 
             return orders;
         }
 
+        public Order GetOrderById(string orderId)
+        {
+            var order = this._ordersRepository.All().First(o => o.Id == orderId);
+
+            return order;
+        }
+
+        public void ChangeOrderStatus(Order order)
+        {
+            var readyStatus = this._orderStatusRepository.All().First(os => os.Status == Restaurant.Data.Models.Enums.OrderStatus.Ready);
+            var preapringStatus = this._orderStatusRepository.All().First(os => os.Status == Restaurant.Data.Models.Enums.OrderStatus.Preapring);
+
+            order.Status = readyStatus;
+
+            this._ordersRepository.Update(order);
+        }
     }
 }

@@ -17,5 +17,9 @@ namespace Restaurant.Services.Contracts
         IQueryable<Order> AllKitchenOrders();
 
         IQueryable<Order> AllBarOrders();
+
+        Order GetOrderById(string orderId);
+
+        void ChangeOrderStatus(Order order);
     }
 }

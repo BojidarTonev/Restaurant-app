@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Restaurant.Data\Restaurant.Data.csproj" />
-    <ProjectReference Include="..\Restaurant.Sandbox\Restaurant.Sandbox.csproj" />
     <ProjectReference Include="..\Restaurant.Services\Restaurant.Services.csproj" />
   </ItemGroup>
 

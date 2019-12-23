@@ -6,6 +6,6 @@ namespace Restourant.Web.Areas.Orders.Models
     {
         public List<UsersOrderDto> userOrders { get; set; }
 
-        public string waiterName { get; set; }
+        public string userName { get; set; }
     }
 }

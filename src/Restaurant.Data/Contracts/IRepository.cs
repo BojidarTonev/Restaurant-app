@@ -12,6 +12,8 @@ namespace Restaurant.Data.Contracts
 
         void Delete(TEntity entity);
 
+        void Update(TEntity entity);
+
         Task<int> SaveChangesAsync();
     }
 }
