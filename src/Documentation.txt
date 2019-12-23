@@ -21,6 +21,13 @@ the order product and serve it to the table where the clients are.
 #ADMIN
 Users assigned with the Role Admin have access to all the orders that have been made in the Restaurant and all the Tables. Admins can also create and add products to the menu.
 
+To access any of their functionalities you ahve to first log in with a user of that role:
+#Waiter === username: Waiter1, password: waiter123
+#Waiter === username: Waiter2, password: waiter123
+#Admin === username: Admin, password: admin123
+#Barman === username: Barman, password: barman123
+#Chef === username: Chef, password:cheff123
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
 
 
